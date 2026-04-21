@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:18.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: plantuser
+      POSTGRES_PASSWORD: plantpassword
+      POSTGRES_DB: plantdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
