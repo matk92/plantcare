@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: plantpassword
       POSTGRES_DB: plantdb
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
 
 volumes:
   pgdata:
