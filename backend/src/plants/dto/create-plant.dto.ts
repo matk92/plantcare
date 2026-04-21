@@ -2,52 +2,52 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreatePlantDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'Morgan Treeman' })
   @IsString()
   @MaxLength(200)
   name!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'https://i.redd.it/x6odx0ctlqx91.jpg' })
   @IsOptional()
   @IsString()
   imageUrl?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Mi-ombre' })
   @IsOptional()
   @IsString()
   exposition?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Sol frais' })
   @IsOptional()
   @IsString()
   soilHumidity?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Non rustique (>10°C)' })
   @IsOptional()
   @IsString()
   hardiness?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Neutre (6.5-7.5)' })
   @IsOptional()
   @IsString()
   soilPh?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Terreau riche' })
   @IsOptional()
   @IsString()
   soilTexture?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Riche en humus' })
   @IsOptional()
   @IsString()
   organicMatter?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Bon drainage' })
   @IsOptional()
   @IsString()
   drainageCapacity?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Faible' })
   @IsOptional()
   @IsString()
   limestoneTolerance?: string;

@@ -14,13 +14,13 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get('users')
-  @ApiOperation({ summary: 'liste tous les users (admin)' })
+  @ApiOperation({ summary: 'Liste tous les users (admin)' })
   listUsers() {
     return this.adminService.listUsers();
   }
 
   @Get('gardens')
-  @ApiOperation({ summary: 'liste tous les jardins (admin support)' })
+  @ApiOperation({ summary: 'Liste tous les jardins (admin)' })
   listGardens() {
     return this.adminService.listGardens();
   }

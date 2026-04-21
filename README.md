@@ -17,13 +17,7 @@ npx prisma db seed
 npm run start:dev
 ```
 
-# Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
+Le back tourne sur [http://localhost:3000](http://localhost:3000).
 
 # doc Swagger
 

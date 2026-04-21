@@ -60,7 +60,6 @@ export class GardenService {
     return this.prisma.gardenEntry.update({
       where: { id },
       data: {
-        plantId: dto.plantId,
         customName: dto.customName,
         nickname: dto.nickname,
         lastWateredAt: dto.lastWateredAt ? new Date(dto.lastWateredAt) : undefined,

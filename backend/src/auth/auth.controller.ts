@@ -30,21 +30,21 @@ export class AuthController {
 
   @Post('verify-email')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'verifier le mail du user avec le token' })
+  @ApiOperation({ summary: 'Verifier le mail du user avec le token' })
   verifyEmail(@Body() dto: VerifyEmailDto) {
     return this.authService.verifyEmail(dto);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'connexion et déclencher le code 2FA' })
+  @ApiOperation({ summary: 'Connexion (declenche l\'envoi du code 2FA)' })
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
 
   @Post('2fa/verify')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'verif du code 2fa' })
+  @ApiOperation({ summary: 'Verifier le code 2FA et obtenir le JWT' })
   verifyTwoFactor(@Body() dto: VerifyTwoFactorDto) {
     return this.authService.verifyTwoFactor(dto);
   }
@@ -52,8 +52,17 @@ export class AuthController {
   @Get('me')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'afficher info de l\'utilisateur connecté' })
+  @ApiOperation({ summary: 'Infos de l\'utilisateur connecte' })
   me(@Req() req: Request) {
     return req.user;
+  }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Deconnexion' })
+  logout() {
+    return { message: 'Déconnecté' };
   }
 }

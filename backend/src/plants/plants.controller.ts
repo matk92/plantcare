@@ -22,13 +22,13 @@ export class PlantsController {
   constructor(private readonly plantsService: PlantsService) {}
 
   @Get()
-  @ApiOperation({ summary: 'liste publique des plantes (encyclopedie)' })
+  @ApiOperation({ summary: 'Liste publique des plantes (encyclopedie)' })
   findAll() {
     return this.plantsService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'detail d\'une plante' })
+  @ApiOperation({ summary: 'Detail d\'une plante' })
   findOne(@Param('id') id: string) {
     return this.plantsService.findOne(id);
   }
@@ -37,7 +37,7 @@ export class PlantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'ajouter une plante (admin)' })
+  @ApiOperation({ summary: 'Ajouter une plante (admin)' })
   create(@Body() dto: CreatePlantDto) {
     return this.plantsService.create(dto);
   }
@@ -46,7 +46,7 @@ export class PlantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'modifier une plante (admin)' })
+  @ApiOperation({ summary: 'Modifier une plante (admin)' })
   update(@Param('id') id: string, @Body() dto: UpdatePlantDto) {
     return this.plantsService.update(id, dto);
   }
@@ -55,7 +55,7 @@ export class PlantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'supprimer une plante (admin)' })
+  @ApiOperation({ summary: 'Supprimer une plante (admin)' })
   remove(@Param('id') id: string) {
     return this.plantsService.remove(id);
   }

@@ -2,35 +2,35 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateGardenEntryDto {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'id-de-la-plante' })
   @IsOptional()
   @IsString()
   plantId?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Mon ficus du salon' })
   @IsOptional()
   @IsString()
   @MaxLength(200)
   customName?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Fifi' })
   @IsOptional()
   @IsString()
   @MaxLength(100)
   nickname?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: '2026-04-18T19:00:00.000Z' })
   @IsOptional()
   @IsDateString()
   lastWateredAt?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'En forme ' })
   @IsOptional()
   @IsString()
   @MaxLength(100)
   healthStatus?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Arroser tous les 3 jours' })
   @IsOptional()
   @IsString()
   @MaxLength(1000)
