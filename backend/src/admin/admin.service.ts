@@ -3,10 +3,10 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  listUsers() {
-    return this.prisma.user.findMany({
+  async listUsers() {
+    const users = await this.prisma.user.findMany({
       select: {
         id: true,
         email: true,
@@ -17,6 +17,7 @@ export class AdminService {
       },
       orderBy: { createdAt: 'desc' },
     });
+    return users;
   }
 
   listGardens() {

@@ -1,11 +1,15 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateGardenEntryDto } from './dto/create-garden-entry.dto';
 import { UpdateGardenEntryDto } from './dto/update-garden-entry.dto';
 
 @Injectable()
 export class GardenService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   findAllForUser(userId: string) {
     return this.prisma.gardenEntry.findMany({
@@ -46,7 +50,9 @@ export class GardenService {
         plantId: dto.plantId,
         customName: dto.customName,
         nickname: dto.nickname,
-        lastWateredAt: dto.lastWateredAt ? new Date(dto.lastWateredAt) : undefined,
+        lastWateredAt: dto.lastWateredAt
+          ? new Date(dto.lastWateredAt)
+          : undefined,
         healthStatus: dto.healthStatus,
         notes: dto.notes,
       },
@@ -62,7 +68,9 @@ export class GardenService {
       data: {
         customName: dto.customName,
         nickname: dto.nickname,
-        lastWateredAt: dto.lastWateredAt ? new Date(dto.lastWateredAt) : undefined,
+        lastWateredAt: dto.lastWateredAt
+          ? new Date(dto.lastWateredAt)
+          : undefined,
         healthStatus: dto.healthStatus,
         notes: dto.notes,
       },

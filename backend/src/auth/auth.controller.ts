@@ -1,21 +1,21 @@
 import {
-  Body,
   Controller,
+  Post,
   Get,
+  Body,
+  Req,
   HttpCode,
   HttpStatus,
-  Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { Request } from 'express';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { VerifyTwoFactorDto } from './dto/verify-two-factor.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import type { Request } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -37,7 +37,7 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Connexion (declenche l\'envoi du code 2FA)' })
+  @ApiOperation({ summary: "Connexion (declenche l'envoi du code 2FA)" })
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
@@ -52,17 +52,8 @@ export class AuthController {
   @Get('me')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Infos de l\'utilisateur connecte' })
+  @ApiOperation({ summary: "Infos de l'utilisateur connecte" })
   me(@Req() req: Request) {
     return req.user;
-  }
-
-  @Post('logout')
-  @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Deconnexion' })
-  logout() {
-    return { message: 'Déconnecté' };
   }
 }

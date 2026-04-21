@@ -7,48 +7,48 @@ export class CreatePlantDto {
   @MaxLength(200)
   name!: string;
 
-  @ApiPropertyOptional({ example: 'https://i.redd.it/x6odx0ctlqx91.jpg' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional({ example: 'https://i.redd.it/x6odx0ctlqx91.jpg' })
   imageUrl?: string;
 
-  @ApiPropertyOptional({ example: 'Mi-ombre' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   exposition?: string;
 
-  @ApiPropertyOptional({ example: 'Sol frais' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   soilHumidity?: string;
 
-  @ApiPropertyOptional({ example: 'Non rustique (>10°C)' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   hardiness?: string;
 
-  @ApiPropertyOptional({ example: 'Neutre (6.5-7.5)' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   soilPh?: string;
 
-  @ApiPropertyOptional({ example: 'Terreau riche' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   soilTexture?: string;
 
-  @ApiPropertyOptional({ example: 'Riche en humus' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   organicMatter?: string;
 
-  @ApiPropertyOptional({ example: 'Bon drainage' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   drainageCapacity?: string;
 
-  @ApiPropertyOptional({ example: 'Faible' })
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional()
   limestoneTolerance?: string;
 }

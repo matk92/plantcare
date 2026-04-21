@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
 import { CreatePlantDto } from './dto/create-plant.dto';
 import { UpdatePlantDto } from './dto/update-plant.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class PlantsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   findAll() {
     return this.prisma.plant.findMany({ orderBy: { name: 'asc' } });
@@ -13,9 +13,7 @@ export class PlantsService {
 
   async findOne(id: string) {
     const plant = await this.prisma.plant.findUnique({ where: { id } });
-    if (!plant) {
-      throw new NotFoundException('Plante introuvable');
-    }
+    if (!plant) throw new NotFoundException('Plante introuvable');
     return plant;
   }
 
@@ -23,14 +21,13 @@ export class PlantsService {
     return this.prisma.plant.create({ data: dto });
   }
 
-  async update(id: string, dto: UpdatePlantDto) {
-    await this.findOne(id);
+  update(id: string, dto: UpdatePlantDto) {
     return this.prisma.plant.update({ where: { id }, data: dto });
   }
 
   async remove(id: string) {
     await this.findOne(id);
     await this.prisma.plant.delete({ where: { id } });
-    return { message: 'Plante supprimée' };
+    return { message: 'Plante supprimee' };
   }
 }

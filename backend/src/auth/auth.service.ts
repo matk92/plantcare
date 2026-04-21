@@ -7,16 +7,16 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { randomBytes, randomInt } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
-import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { VerifyTwoFactorDto } from './dto/verify-two-factor.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService,
+    private prisma: PrismaService,
+    private jwtService: JwtService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -37,11 +37,15 @@ export class AuthService {
         password: hashedPassword,
         name: dto.name,
         emailVerificationToken: token,
-        emailVerificationTokenExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        emailVerificationTokenExpiresAt: new Date(
+          Date.now() + 24 * 60 * 60 * 1000,
+        ),
       },
     });
 
-    console.log(`[MAIL SIMULE] lien de verif pour ${user.email} : /auth/verify-email?token=${token}`);
+    console.log(
+      `lien de verif pour ${user.email} : /auth/verify-email?token=${token}`,
+    );
 
     return {
       id: user.id,
@@ -61,7 +65,7 @@ export class AuthService {
       !user.emailVerificationTokenExpiresAt ||
       user.emailVerificationTokenExpiresAt < new Date()
     ) {
-      throw new BadRequestException('Token invalide ou expire');
+      throw new BadRequestException('Token invalide');
     }
 
     await this.prisma.user.update({
@@ -99,7 +103,7 @@ export class AuthService {
       },
     });
 
-    console.log(`[MAIL SIMULE] code 2FA pour ${user.email} : ${code}`);
+    console.log(`code 2FA pour ${user.email} : ${code}`);
 
     return {
       message: 'Code 2FA envoyé par mail',

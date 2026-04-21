@@ -1,27 +1,27 @@
 import {
-  Body,
   Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
   Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { Request } from 'express';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { GardenService } from './garden.service';
 import { CreateGardenEntryDto } from './dto/create-garden-entry.dto';
 import { UpdateGardenEntryDto } from './dto/update-garden-entry.dto';
-import { GardenService } from './garden.service';
+import type { Request } from 'express';
 
 @ApiTags('garden')
+@Controller('garden')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('garden')
 export class GardenController {
-  constructor(private readonly gardenService: GardenService) {}
+  constructor(private gardenService: GardenService) {}
 
   @Get()
   @ApiOperation({ summary: 'Liste mes plantes du jardin' })
@@ -31,7 +31,7 @@ export class GardenController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Detail d\'une plante de mon jardin' })
+  @ApiOperation({ summary: "Detail d'une plante de mon jardin" })
   findOne(@Req() req: Request, @Param('id') id: string) {
     const user = req.user as { id: string };
     return this.gardenService.findOneForUser(user.id, id);
