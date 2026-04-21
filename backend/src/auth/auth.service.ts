@@ -25,7 +25,7 @@ export class AuthService {
     });
 
     if (existing) {
-      throw new BadRequestException('Email already in use');
+      throw new BadRequestException('email deja utilise');
     }
 
     const hashedPassword = await bcrypt.hash(dto.password, 10);
@@ -41,7 +41,7 @@ export class AuthService {
       },
     });
 
-    console.log(`[MOCK EMAIL] verify link for ${user.email}: /auth/verify-email?token=${token}`);
+    console.log(`[MAIL SIMULE] lien de verif pour ${user.email} : /auth/verify-email?token=${token}`);
 
     return {
       id: user.id,
@@ -61,7 +61,7 @@ export class AuthService {
       !user.emailVerificationTokenExpiresAt ||
       user.emailVerificationTokenExpiresAt < new Date()
     ) {
-      throw new BadRequestException('Invalid or expired token');
+      throw new BadRequestException('Token invalide ou expire');
     }
 
     await this.prisma.user.update({
@@ -73,7 +73,7 @@ export class AuthService {
       },
     });
 
-    return { message: 'Email verified' };
+    return { message: 'Email verifie' };
   }
 
   async login(dto: LoginDto) {
@@ -82,11 +82,11 @@ export class AuthService {
     });
 
     if (!user || !(await bcrypt.compare(dto.password, user.password))) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Identifiants invalides');
     }
 
     if (!user.isEmailVerified) {
-      throw new UnauthorizedException('Email not verified');
+      throw new UnauthorizedException('Email pas encore verifie');
     }
 
     const code = randomInt(0, 1_000_000).toString().padStart(6, '0');
@@ -99,10 +99,10 @@ export class AuthService {
       },
     });
 
-    console.log(`[MOCK EMAIL] 2FA code for ${user.email}: ${code}`);
+    console.log(`[MAIL SIMULE] code 2FA pour ${user.email} : ${code}`);
 
     return {
-      message: 'Two-factor code sent by email',
+      message: 'Code 2FA envoyé par mail',
       email: user.email,
     };
   }
@@ -119,7 +119,7 @@ export class AuthService {
       user.twoFactorCodeExpiresAt < new Date() ||
       user.twoFactorCode !== dto.code
     ) {
-      throw new UnauthorizedException('Invalid or expired code');
+      throw new UnauthorizedException('Code invalide ou expiré');
     }
 
     await this.prisma.user.update({

@@ -1,29 +1,37 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
-  id                              String    @id @default(cuid())
-  email                           String    @unique
+  id                              String        @id @default(cuid())
+  email                           String        @unique
   password                        String
   name                            String?
-  isEmailVerified                 Boolean   @default(false)
-  emailVerificationToken          String?   @unique
+  role                            Role          @default(USER)
+  isEmailVerified                 Boolean       @default(false)
+  emailVerificationToken          String?       @unique
   emailVerificationTokenExpiresAt DateTime?
   twoFactorCode                   String?
   twoFactorCodeExpiresAt          DateTime?
-  createdAt                       DateTime  @default(now())
-  updatedAt                       DateTime  @updatedAt
+  createdAt                       DateTime      @default(now())
+  updatedAt                       DateTime      @updatedAt
+  gardenEntries                   GardenEntry[]
 }
 
 model Plant {
-  id                 String   @id @default(cuid())
-  name               String   @unique
+  id                 String        @id @default(cuid())
+  name               String        @unique
   imageUrl           String?
   exposition         String?
   soilHumidity       String?
@@ -33,6 +41,22 @@ model Plant {
   organicMatter      String?
   drainageCapacity   String?
   limestoneTolerance String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  gardenEntries      GardenEntry[]
+}
+
+model GardenEntry {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plantId       String?
+  plant         Plant?    @relation(fields: [plantId], references: [id])
+  customName    String?
+  nickname      String?
+  lastWateredAt DateTime?
+  healthStatus  String?
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }

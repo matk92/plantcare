@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
+import * as bcrypt from 'bcrypt';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { PrismaClient } from '../generated/prisma/client';
@@ -26,7 +27,7 @@ async function main() {
   const raw = readFileSync(filePath, 'utf-8');
   const plants = JSON.parse(raw) as PlantRecord[];
 
-  console.log(`Seeding ${plants.length} plants...`);
+  console.log(`Insertion de des plantes`);
 
   for (const plant of plants) {
     await prisma.plant.upsert({
@@ -57,7 +58,25 @@ async function main() {
     });
   }
 
-  console.log('Seeding complete.');
+  console.log('Plantes OK');
+
+  const adminEmail = 'admin@plant.com';
+  const adminPassword = 'plante1234';
+  const hashed = await bcrypt.hash(adminPassword, 10);
+
+  await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: { role: 'ADMIN' },
+    create: {
+      email: adminEmail,
+      password: hashed,
+      name: 'Admin',
+      role: 'ADMIN',
+      isEmailVerified: true,
+    },
+  });
+
+  console.log(`Admin pret : ${adminEmail} / ${adminPassword}`);
 }
 
 main()

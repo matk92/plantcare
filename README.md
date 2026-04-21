@@ -10,6 +10,7 @@ docker compose up -d
 
 ```bash
 cd backend
+cp .env.example .env
 npm i
 npx prisma migrate dev
 npx prisma db seed
@@ -24,6 +25,12 @@ npm install
 npm run dev
 ```
 
-# INfo
+# doc Swagger
 
 [http://localhost:3000/docs](http://localhost:3000/docs)
+
+# Compte admin
+
+- email: [admin@plant.com](mailto:admin@plant.com)
+- password: plante1234
+
