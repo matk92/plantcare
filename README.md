@@ -11,6 +11,7 @@ docker compose up -d
 ```bash
 cd backend
 cp .env.example .env
+npx prisma generate
 npm i
 npx prisma migrate dev
 npx prisma db seed
