@@ -6,6 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { randomBytes, randomInt } from 'crypto';
+import { MailService } from '../mail/mail.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -17,6 +18,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -43,9 +45,7 @@ export class AuthService {
       },
     });
 
-    console.log(
-      `lien de verif pour ${user.email} : /auth/verify-email?token=${token}`,
-    );
+    await this.mailService.sendVerificationEmail(user.email, token);
 
     return {
       id: user.id,
@@ -103,7 +103,7 @@ export class AuthService {
       },
     });
 
-    console.log(`code 2FA pour ${user.email} : ${code}`);
+    await this.mailService.sendTwoFactorCode(user.email, code);
 
     return {
       message: 'Code 2FA envoyé par mail',
